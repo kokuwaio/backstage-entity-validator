@@ -13,7 +13,7 @@ RUN --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
 
 # fetch gpg keys for verification
 # https://github.com/nodejs/node?tab=readme-ov-file#release-keys
-RUN gpg --keyserver=hkps://keys.openpgp.org --recv-keys \
+RUN gpg --keyserver=hkps://keyserver.ubuntu.com --recv-keys \
 		C0D6248439F1D5604AAFFB4021D900FFDB233756 \
 		DD792F5973C6DE52C432CBDAC77ABFA00DDBF2B7 \
 		CC68F5A3106FF448322E48ED27F5E38D5B0A215F \
