@@ -10,21 +10,20 @@
 	docker run --rm --read-only --volume=$(pwd):$(pwd):ro --workdir=$(pwd) kokuwaio/hadolint
 	docker run --rm --read-only --volume=$(pwd):$(pwd):ro --workdir=$(pwd) kokuwaio/yamllint
 	docker run --rm --read-only --volume=$(pwd):$(pwd):rw --workdir=$(pwd) kokuwaio/markdownlint --fix
-	docker run --rm --read-only --volume=$(pwd):$(pwd):ro --workdir=$(pwd) kokuwaio/renovate
+	docker run --rm --read-only --volume=$(pwd):$(pwd):ro --workdir=$(pwd) kokuwaio/renovate-config-validator
+	docker run --rm --read-only --volume=$(pwd):$(pwd):ro --workdir=$(pwd) kokuwaio/backstage-entity-validator
 	docker run --rm --read-only --volume=$(pwd):$(pwd):ro --workdir=$(pwd) woodpeckerci/woodpecker-cli lint
 
 # Build image with local docker daemon.
 @build:
-	docker build . --tag=kokuwaio/backstage-entity-validator:dev --build-arg=NPM_CONFIG_REGISTRY --load
-
-# Inspect image with docker.
-@inspect: build
-	docker image inspect kokuwaio/backstage-entity-validator:dev
+	docker buildx build . --build-arg=NPM_CONFIG_REGISTRY --platform=linux/amd64,linux/arm64
 
 # Inspect image layers with `dive`.
-@dive: build
-	dive kokuwaio/backstage-entity-validator:dev
+@dive TARGET="":
+	dive build . --build-arg=NPM_CONFIG_REGISTRY --target={{TARGET}}
 
 # Test created image.
-@test: build
+@test:
+	docker buildx build . --build-arg=NPM_CONFIG_REGISTRY --load --target=kokuwaio/backstage-entity-validator:dev
 	docker run --rm --read-only --volume=$(pwd):$(pwd):ro --workdir=$(pwd) kokuwaio/backstage-entity-validator:dev
+

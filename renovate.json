@@ -1,13 +1,6 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["local>kokuwaio/renovate-config", ":reviewer(stephan.schnabel)"],
-	"packageRules": [
-		{
-			"matchPackageNames": ["nodejs/node"],
-			"matchUpdateTypes": ["major"],
-			"enabled": false
-		}
-	],
+	"extends": ["kokuwaio/renovate-config"],
 	"customManagers": [
 		{
 			"customType": "regex",
@@ -24,7 +17,7 @@
 			"managerFilePatterns": ["Dockerfile"],
 			"matchStrings": [
 				"nodejs.org/download/release/(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)/",
-				"node-(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)-linux-\\$SUFFIX"
+				"node-(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)-linux-\\$ARCH"
 			],
 			"datasourceTemplate": "github-releases",
 			"packageNameTemplate": "nodejs/node"
