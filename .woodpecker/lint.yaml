@@ -29,8 +29,3 @@ steps:
     image: kokuwaio/shellcheck:v0.11.0
     depends_on: []
     when: [path: [.woodpecker/lint.yaml, "**/*.sh"]]
-
-  backstage:
-    image: kokuwaio/backstage-entity-validator:0.5.1
-    depends_on: []
-    when: [path: [.woodpecker/lint.yaml, catalog-info.yaml]]

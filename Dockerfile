@@ -30,7 +30,6 @@ RUN gpg --keyserver=hkps://keyserver.ubuntu.com --recv-keys \
 
 ARG TARGETARCH
 RUN --mount=type=cache,target=/build \
-	ARCH=$(dpkg --print-architecture); \
 	[[ $TARGETARCH == amd64 ]] && export ARCH=x64; \
 	[[ $TARGETARCH == arm64 ]] && export ARCH=arm64; \
 	[[ -z ${ARCH:-} ]] && echo "Unknown arch: $TARGETARCH" && exit 1; \
@@ -39,12 +38,16 @@ RUN --mount=type=cache,target=/build \
 		"https://nodejs.org/download/release/v24.8.0/SHASUMS256.txt" \
 		"https://nodejs.org/download/release/v24.8.0/SHASUMS256.txt.sig" && \
 	sha256sum --quiet --check --strict --ignore-missing SHASUMS256.txt && \
-	gpg --verify SHASUMS256.txt.sig SHASUMS256.txt 2>/dev/null && \
+	gpg --verify SHASUMS256.txt.sig SHASUMS256.txt && \
 	tar --xz --extract --file="node-v24.8.0-linux-$ARCH.tar.xz" --exclude=bin/npx --exclude=bin/corepack --exclude=lib/node_modules/corepack --exclude=include --exclude=share --no-same-owner && \
-	mv "node-v24.8.0-linux-$ARCH" /opt/node
+	mv "node-v24.8.0-linux-$ARCH" /opt/node && \
+	find /opt/node -type f ! -name node -a ! -name npm -a ! -name \*.js -a ! -name \*.cjs -a ! -name package.json -a ! -name vendors.json -delete && \
+	find /opt/node -type d -empty -delete
 
 ARG NPM_CONFIG_REGISTRY
-RUN --mount=type=tmpfs,target=/tmp PATH="$PATH:/opt/node/bin" npm install "@roadiehq/backstage-entity-validator@0.5.1" --global --no-fund --cache=/tmp
+RUN --mount=type=tmpfs,target=/tmp PATH="$PATH:/opt/node/bin" npm install "@roadiehq/backstage-entity-validator@0.5.1" --global --no-fund --cache=/tmp && \
+	find /opt/node/lib/node_modules/@roadiehq -type f ! -name \*.js -a ! -name \*.cjs -a ! -name \*.mjs -a ! -name package.json -a ! -name validate-entity -a ! -name bev -delete && \
+	find /opt/node/lib/node_modules/@roadiehq -type d -empty -delete
 
 ##
 ## Final stage
