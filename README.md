@@ -17,18 +17,23 @@ Woodpecker:
 ```yaml
 steps:
   backstage-entity-validator:
-    image: kokuwaio/backstage-entity-validator
+    depends_on: []
+    image: kokuwaio/backstage-entity-validator:0.5.1
     when:
       event: pull_request
       paths: [catalog-info.yaml]
 ```
 
-Gitlab:
+Gitlab: (using script is needed because of <https://gitlab.com/gitlab-org/gitlab/-/issues/19717>)
 
 ```yaml
 backstage-entity-validator:
+  needs: []
   stage: lint
-  image: kokuwaio/backstage-entity-validator
+  image:
+    name: kokuwaio/backstage-entity-validator:0.5.1
+    entrypoint: [""]
+  script: [/usr/local/bin/entrypoint.sh]
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       changes: [catalog-info.yaml]
