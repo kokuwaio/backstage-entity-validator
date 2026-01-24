@@ -18,7 +18,7 @@ Woodpecker:
 steps:
   backstage-entity-validator:
     depends_on: []
-    image: kokuwaio/backstage-entity-validator:0.5.1
+    image: kokuwaio/backstage-entity-validator:0.6.3
     when:
       event: pull_request
       paths: [catalog-info.yaml]
@@ -31,7 +31,7 @@ backstage-entity-validator:
   needs: []
   stage: lint
   image:
-    name: kokuwaio/backstage-entity-validator:0.5.1
+    name: kokuwaio/backstage-entity-validator:0.6.3
     entrypoint: [""]
   script: [/usr/local/bin/entrypoint.sh]
   rules:

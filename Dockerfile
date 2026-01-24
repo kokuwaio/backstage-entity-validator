@@ -45,7 +45,7 @@ RUN --mount=type=cache,target=/build \
 	find /opt/node -type d -empty -delete
 
 ARG NPM_CONFIG_REGISTRY
-RUN --mount=type=tmpfs,target=/tmp PATH="$PATH:/opt/node/bin" npm install "@roadiehq/backstage-entity-validator@0.5.1" --global --no-fund --cache=/tmp && \
+RUN --mount=type=tmpfs,target=/tmp PATH="$PATH:/opt/node/bin" npm install "@roadiehq/backstage-entity-validator@0.6.3" --global --no-fund --cache=/tmp && \
 	find /opt/node/lib/node_modules/@roadiehq -type f ! -name \*.js -a ! -name \*.cjs -a ! -name \*.mjs -a ! -name package.json -a ! -name validate-entity -a ! -name bev -delete && \
 	find /opt/node/lib/node_modules/@roadiehq -type d -empty -delete
 
