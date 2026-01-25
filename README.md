@@ -48,5 +48,12 @@ docker run --rm --volume=$(pwd):$(pwd):ro --workdir=$(pwd) kokuwaio/backstage-en
 ## Settings
 
 | Settings Name | Environment  | Default             | Description        |
-| --------------| ------------ | ------------------- | ------------------ |
+| ------------- | ------------ | ------------------- | ------------------ |
 | `files`       | PLUGIN_FILES | `catalog-info.yaml` | Files to validate. |
+
+## Alternatives
+
+| Image                                                                                               | Comment                           |                                                                                  amd64                                                                                  |                                                                                  arm64                                                                                  |
+| --------------------------------------------------------------------------------------------------- | --------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [kokuwaio/backstage-entity-validator](https://hub.docker.com/r/kokuwaio/backstage-entity-validator) | Woodpecker plugin                 | [![size](https://img.shields.io/docker/image-size/kokuwaio/backstage-entity-validator?arch=amd64&label=)](https://hub.docker.com/r/kokuwaio/backstage-entity-validator) | [![size](https://img.shields.io/docker/image-size/kokuwaio/backstage-entity-validator?arch=arm64&label=)](https://hub.docker.com/r/kokuwaio/backstage-entity-validator) |
+| [roadiehq/backstage-entity-validator](https://hub.docker.com/r/roadiehq/backstage-entity-validator) | not a Woodpecker plugin, official | [![size](https://img.shields.io/docker/image-size/roadiehq/backstage-entity-validator?arch=amd64&label=)](https://hub.docker.com/r/roadiehq/backstage-entity-validator) | [![size](https://img.shields.io/docker/image-size/roadiehq/backstage-entity-validator?arch=arm64&label=)](https://hub.docker.com/r/roadiehq/backstage-entity-validator) |
