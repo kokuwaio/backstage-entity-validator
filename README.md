@@ -42,7 +42,7 @@ backstage-entity-validator:
 CLI:
 
 ```bash
-docker run --rm --volume=$(pwd):$(pwd):ro --workdir=$(pwd) kokuwaio/backstage-entity-validator
+docker run --rm --volume=$PWD:$PWD:ro --workdir=$PWD kokuwaio/backstage-entity-validator
 ```
 
 ## Settings
