@@ -37,6 +37,7 @@ RUN gpg --keyserver=hkps://keyserver.ubuntu.com --recv-keys \
 # https://endoflife.date/nodejs
 
 ARG TARGETARCH
+# hadolint ignore=SC3010
 RUN --mount=type=cache,target=/build,id=nodejs \
 	[[ $TARGETARCH == amd64 ]] && export ARCH=x64; \
 	[[ $TARGETARCH == arm64 ]] && export ARCH=arm64; \
